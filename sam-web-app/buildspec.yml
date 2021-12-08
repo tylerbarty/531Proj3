@@ -4,6 +4,8 @@ phases:
     commands:
       # Install all dependencies (including dependencies for running tests)
       - npm install
+    runtime-versions:
+        python: 3.8
   pre_build:
     commands:
       # Discover and run unit tests in the '__tests__' directory
@@ -16,7 +18,9 @@ phases:
     commands:
       # Use AWS SAM to package the application by using AWS CloudFormation
       - aws cloudformation package --template template.yaml --s3-bucket $S3_BUCKET --output-template template-export.yml
+      - sam package --template-file template.yml --s3-bucket 2021-12-07-group3project-superheros --output-template-file packaged-template.yml
 artifacts:
   type: zip
   files:
     - template-export.yml
+    - packaged-template.yml
